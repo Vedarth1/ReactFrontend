@@ -8,8 +8,13 @@ function ChatBot() {
     const [isLoading, setIsLoading] = useState(false);
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
+        const storedToken = localStorage.getItem('jwtToken');
+        if (storedToken) {
+            setToken(storedToken);
+        }
         toast.success("File Uploaded Successfully!", {
             position: "top-right"
         });
@@ -34,12 +39,12 @@ function ChatBot() {
         setMessages([...messages, { sender: "user", message: input }]);
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/query', {
+            const response = await fetch('http://localhost:8080/api/bot/query', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
-                credentials: 'include',
                 body: JSON.stringify({"query":input})
             });
 
@@ -49,7 +54,18 @@ function ChatBot() {
                     ...prevMessages,
                     { sender: 'bot', message: data.response.result }
                 ]);
-            } else {
+            }
+            else if(response.status==401)
+            {
+                toast.error("Session Expired!", {
+                position: "top-right"
+                });
+        
+                setTimeout(() => {
+                navigate('/');
+                }, 5000);
+            }
+            else {
                 const errorData = await response.json();
                 toast.error(`Error: ${errorData.message}`, {
                     position: "top-right"

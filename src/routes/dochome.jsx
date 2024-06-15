@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,14 @@ import { ProgressBar } from 'react-loader-spinner'
 function Home() {
   const navigate=useNavigate();
   const [isUploading,setIsUploading]=useState(false);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+      const storedToken = localStorage.getItem('jwtToken');
+      if (storedToken) {
+          setToken(storedToken);
+      }
+  }, []);
 
   const handleSubmit = async (e) => {
     setIsUploading(true);
@@ -26,15 +34,28 @@ function Home() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/upload', {
+      const response = await fetch('http://localhost:8080/api/bot/fileupload', {
         method: 'POST',
-        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData
       });
 
       if (response.ok) {
           navigate('/chat');
-      } else {
+      }
+      else if(response.status==401)
+      {
+        toast.error("Session Expired!", {
+          position: "top-right"
+        });
+
+        setTimeout(() => {
+          navigate('/');
+        }, 5000);
+      }
+      else {
         toast.error("File upload failed!", {
           position: "top-right"
         });

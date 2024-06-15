@@ -5,9 +5,10 @@ import Home from './routes/dochome.jsx'
 import './index.css'
 import ErrorPage from './routes/errorpage.jsx';
 import ChatBot from './routes/chatbot.jsx';
-import { SignIn } from './routes/login.jsx';
-import { SignUp } from './routes/signup.jsx';
+import SignIn from './routes/login.jsx';
+import SignUp  from './routes/signup.jsx';
 import Dashboard from './routes/Dashboard.jsx';
+import QrDashboad from './routes/QRdashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path:"dashboard",
     element:<Dashboard/>
+  },
+  {
+    path:"qrgenerator",
+    element:<QrDashboad/>
   }
 ]);
 
