@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 
 export default function SignUp() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
-  const [isLoading,setIsLoading]=useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -20,52 +20,48 @@ export default function SignUp() {
     }));
   };
 
-  const handlesignIn=()=>{
+  const handlesignIn = () => {
     navigate('/')
   }
 
-  const handleSubmit= async (event)=>{
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
-    try{
-      const response=await fetch('http://localhost:8080/api/auth/signup',{
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/signup', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       })
 
-      if(response.ok)
-      {
-        toast.success("Signup Successfull! , Please Login To get Started!", {
-            position: "top-right"
+      if (response.ok) {
+        toast.success("Signup Successful! Please Login To get Started!", {
+          position: "top-right"
         });
 
         setTimeout(() => {
           navigate('/');
         }, 5000);
-      }
-      else
-      {
+      } else {
         toast.error("Server Side Error!", {
           position: "top-right"
-        }); 
+        });
       }
-    }
-    catch(error){
+    } catch (error) {
       toast.error("Facing some Error while Signing Up!", {
         position: "top-right"
-      }); 
-    }
-    finally{
+      });
+    } finally {
       setIsLoading(false);
     }
   }
+  
   return (
     <section>
-      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white">
+      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24 bg-white min-h-screen">
         <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
           <div className="mb-2 flex justify-center">
             <svg
@@ -94,13 +90,14 @@ export default function SignUp() {
               Sign In
             </a>
           </p>
-          <form onSubmit={handleSubmit} className="mt-8">
-            <div className="space-y-5">
+          <form onSubmit={handleSubmit} className="mt-5">
+            <div className="space-y-4"> {/* Changed space-y-2 to space-y-4 for better spacing */}
               <div>
+              <div className="flex items-center justify-between">
                 <label htmlFor="name" className="text-base font-medium text-gray-900">
-                  {' '}
-                  Full Name{' '}
+                  Full Name
                 </label>
+                </div>
                 <div className="mt-2">
                   <input
                     className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -108,14 +105,15 @@ export default function SignUp() {
                     placeholder="Full Name"
                     onChange={handleInputChange}
                     id="name"
-                  ></input>
+                  />
                 </div>
               </div>
               <div>
+              <div className="flex items-center justify-between">
                 <label htmlFor="email" className="text-base font-medium text-gray-900">
-                  {' '}
-                  Email address{' '}
+                  Email address
                 </label>
+                </div>
                 <div className="mt-2">
                   <input
                     className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -123,14 +121,13 @@ export default function SignUp() {
                     placeholder="Email"
                     onChange={handleInputChange}
                     id="email"
-                  ></input>
+                  />
                 </div>
               </div>
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="text-base font-medium text-gray-900">
-                    {' '}
-                    Password{' '}
+                    Password
                   </label>
                 </div>
                 <div className="mt-2">
@@ -140,11 +137,11 @@ export default function SignUp() {
                     placeholder="Password"
                     onChange={handleInputChange}
                     id="password"
-                  ></input>
+                  />
                 </div>
               </div>
               <div>
-              <button
+                <button
                   type="submit"
                   className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                 >

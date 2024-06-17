@@ -39,6 +39,7 @@ function Home() {
         headers: {
           'Authorization': `Bearer ${token}`
         },
+        credentials: 'include',
         body: formData
       });
 

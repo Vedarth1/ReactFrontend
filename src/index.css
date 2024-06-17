@@ -2,44 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
 body {
   color: #f8f8f8;
   background: #131318;
 }
 
-body input,
-body textarea {
-  color: black;
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
 }
 
-a {
-  color: #5ba4f8;
+.chat-message .message-content {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-a:hover {
-  border-bottom: 1px solid;
+.chat-message.user {
+  align-self: flex-end;
 }
 
-p {
-  margin: 8px 0;
+.chat-message.bot {
+  align-self: flex-start;
 }
 
-code,
-pre {
-  color: #ffa500;
+.chat-message .message-content ul,
+.chat-message .message-content ol {
+  margin-left: 1em;
+  padding-left: 1em;
+  list-style-position: inside;
 }
 
-pre {
-  background-color: black;
-  color: #39ff14;
-}
-
-li {
-  padding: 0px;
+.chat-message .message-content li {
+  margin-bottom: 0.5em; /* Adjust as needed for spacing between list items */
 }

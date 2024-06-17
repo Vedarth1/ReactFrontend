@@ -45,6 +45,7 @@ function ChatBot() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
+                credentials: 'include',
                 body: JSON.stringify({"query":input})
             });
 
@@ -83,11 +84,11 @@ function ChatBot() {
     };
 
     return (
-        <>
-            <div className="flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden border h-screen">
-                <h1 className="text-3xl md:text-4xl mb-12 text-center border-spacing-10">
-                    🦙 Chat With Your Documents 🦙
-                </h1>
+        <>  
+            <div className="flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden h-screen">
+            <h1 className=" md:text-3xl mb-4 text-center border-spacing-5">
+              🦙 Chat With Your Documents 🦙
+            </h1>
                 <div className="flex flex-col-reverse w-full mb-4 overflow-auto grow">
                     {messages.length > 0 ? (
                         [...messages]
@@ -96,7 +97,7 @@ function ChatBot() {
                                 <Chats
                                     key={i}
                                     message={message}
-                                ></Chats>
+                                />
                             ))
                     ) : (
                         ""
